@@ -39,6 +39,30 @@ async function removeNote(id) {
     console.log(chalk.red(`Note with id="${id}" has been removed.`))
 }
 
+async function editNote(id, newTitle) {
+    const notes = await getNotes();
+    const noteIndex = notes.findIndex((note) => note.id === id);
+    if (noteIndex !== -1) {
+        notes[noteIndex].title = newTitle;
+        await saveNotes(notes);
+        console.log(chalk.blue(`Note with id="${id}" has been edited.`));
+    } else {
+        console.log(chalk.yellow(`Note with id="${id}" not found.`));
+    }
+}
+
+// async function editNote(id, newTitle) {
+//     const notes = await getNotes()
+//     const note = notes.find(note => note.id === id)
+//     if (note) {
+//         note.title = newTitle
+//         await saveNotes(notes)
+//         console.log(chalk.blue(`Note with id="${id}" has been edited.`))
+//     } else {
+//         console.log(chalk.yellow(`Note with id="${id}" not found.`))
+//     }
+// }
+
 module.exports = {
-    addNote, getNotes, removeNote
+    addNote, getNotes, removeNote, editNote
 }
